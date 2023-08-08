@@ -10,6 +10,33 @@ Se debe crear una función ConvertirUnidades que reciba como argumentos la unida
 
 function convertirUnidades(cantidad, unidadOrigen, unidadDestino) {
   // Escribe la lógica aquí
+   try {
+    const unidadesPermitidas = ["centimetros", "pulgadas"];
+
+    // Verificar si las unidades proporcionadas son válidas.
+    if (!unidadesPermitidas.includes(unidadOrigen) || !unidadesPermitidas.includes(unidadDestino)) {
+      throw new Error("Unidades no válidas. Las unidades permitidas son: centimetros, pulgadas.");
+    }
+
+    // Verificar si las unidades de origen y destino son iguales.
+    if (unidadOrigen === unidadDestino) {
+      throw new Error("Las unidades de origen y destino no pueden ser iguales.");
+    }
+
+    // Verificar si la cantidad es un número positivo.
+    if (typeof cantidad !== "number" || isNaN(cantidad) || cantidad <= 0) {
+      throw new Error("La cantidad debe ser un número positivo.");
+    }
+
+    // Lógica para realizar las conversiones entre diferentes unidades de medida.
+    if (unidadOrigen === "centimetros" && unidadDestino === "pulgadas") {
+      return cantidad / 2.54; // 1 pulgada = 2.54 centímetros
+    } else if (unidadOrigen === "pulgadas" && unidadDestino === "centimetros") {
+      return cantidad * 2.54; // 1 pulgada = 2.54 centímetros
+    }
+  } catch (error) {
+    throw new Error("Error: " + error.message);
+  }
 }
 
 module.exports = convertirUnidades;
